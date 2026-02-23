@@ -1,0 +1,22 @@
+[package]
+name = "linkman-server"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+async-openai = { version = "0.33.0", features = ["full"] }
+axum = "0.8.8"
+color-eyre = "0.6.5"
+dotenvy = "0.15.7"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+sqlx = { version = "0.8.6", features = ["runtime-tokio-rustls", "postgres", "macros", "migrate", "chrono", "uuid"] }
+tokio = { version = "1.49.0", features = ["macros", "rt-multi-thread"] }
+tower-http = { version = "0.6.2", features = ["cors"] }
+tracing = "0.1.44"
+tracing-subscriber = "0.3.22"
+chrono = { version = "0.4.39", features = ["serde"] }
+uuid = { version = "1.12.1", features = ["serde", "v4"] }
+html-to-markdown-rs = "2.25.1"
+reqwest = { version = "0.12.12", features = ["json"] }
+clap = { version = "4.5.60", features = ["derive"] }

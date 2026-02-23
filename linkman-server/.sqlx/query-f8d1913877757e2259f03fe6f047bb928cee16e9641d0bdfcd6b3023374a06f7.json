@@ -1,0 +1,17 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        INSERT INTO bookmarks (url, title, tags, api_key_id)\n        VALUES ($1, $2, $3, $4)\n        ON CONFLICT (url, api_key_id) DO UPDATE \n        SET title = EXCLUDED.title, tags = EXCLUDED.tags\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text",
+        "TextArray",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "f8d1913877757e2259f03fe6f047bb928cee16e9641d0bdfcd6b3023374a06f7"
+}
