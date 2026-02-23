@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE bookmarks SET tags = $1 WHERE id = $2",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "TextArray",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "2ac89fa1c121cc30f90f53adf9429c64397b6e70c156118e3310807dc981dd15"
+}

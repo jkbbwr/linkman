@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO api_keys (key, description) VALUES ($1, $2)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "db87ebd605ed662d56b8f4e1b7543cc0c1b9e44fae59649df559efb6182ee2a0"
+}

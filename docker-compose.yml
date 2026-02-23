@@ -16,19 +16,15 @@ services:
       timeout: 5s
       retries: 5
 
-  #app:
-  #  build:
-  #    context: ./linkman-server
-  #  ports:
-  #    - "3000:3000"
-  #  environment:
-  #    - DATABASE_URL=postgres://linkman:linkman@db:5432/linkman
-  #    - OPENAI_URL=${OPENAI_URL}
-  #    - OPENAI_API_KEY=${OPENAI_API_KEY}
-  #    - OPENAI_EXTRA_HEADERS=${OPENAI_EXTRA_HEADERS}
-  #  depends_on:
-  #    db:
-  #      condition: service_healthy
+  app:
+    build:
+      context: ./linkman-server
+    ports:
+      - "3000:3000"
+    env_file: .
+    depends_on:
+      db:
+        condition: service_healthy
 
 volumes:
   postgres_data:
