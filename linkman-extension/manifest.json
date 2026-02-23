@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "linkman",
+  "version": "1.0.0",
+  "description": "A companion Chrome extension for linkman-server.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "bookmarks"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "linkman"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  }
+}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Linkman Settings</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f9fafb;
+      color: #111827;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      width: 100%;
+      max-width: 400px;
+    }
+    h1 {
+      font-size: 24px;
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+    input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    .button-group {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+    button {
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #2563eb;
+    }
+    .status {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #059669;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Linkman Settings</h1>
+    <div class="form-group">
+      <label for="backendUrl">Backend URL</label>
+      <input type="text" id="backendUrl" placeholder="http://localhost:3000">
+    </div>
+    <div class="form-group">
+      <label for="apiKey">API Key</label>
+      <input type="password" id="apiKey" placeholder="Your API Secret">
+    </div>
+    
+    <div class="form-group" style="margin-top: 20px;">
+      <label style="display: flex; justify-content: space-between; align-items: center;">
+        Extra HTTP Headers
+        <button id="addHeaderBtn" style="padding: 4px 8px; font-size: 12px; background-color: #f3f4f6; color: #374151; border: 1px solid #d1d5db; border-radius: 4px;">+ Add Header</button>
+      </label>
+      <div id="headersContainer">
+        <!-- Header rows will be injected here -->
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-top: 25px;">
+      <label style="display: flex; align-items: center; cursor: pointer; font-weight: 600;">
+        <input type="checkbox" id="autoSync" style="margin-right: 8px;">
+        Enable Automatic Sync
+      </label>
+      <div id="syncWarning" style="background-color: #fff7ed; border-left: 4px solid #f97316; color: #9a3412; padding: 10px 15px; margin-top: 10px; border-radius: 4px; font-size: 13px; line-height: 1.5;">
+        <strong style="display: block; margin-bottom: 5px; color: #ea580c;">⚠️ DESTRUCTIVE MIRRORING</strong>
+        When enabled, Linkman will <strong>force</strong> your browser bookmarks to match your server exactly. 
+        <br>• Any bookmarks added locally in your browser will be <strong>deleted</strong>.
+        <br>• This will <strong>wipe</strong> your existing native bookmark folders.
+      </div>
+    </div>
+    <div class="form-group" style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
+      <h2 style="font-size: 16px; margin-top: 0; margin-bottom: 15px;">Manual Sync</h2>
+      <button id="importBookmarksBtn" style="width: 100%; margin-bottom: 10px; background-color: #f3f4f6; color: #374151; border: 1px solid #d1d5db;">Import Native Bookmarks to Backend</button>
+      <button id="syncToNativeBtn" style="width: 100%; background-color: #f3f4f6; color: #374151; border: 1px solid #d1d5db;">Sync Backend to Native</button>
+      <div id="syncStatus" style="margin-top: 10px; font-size: 13px; text-align: center; display: none;"></div>
+    </div>
+
+    <div class="button-group" style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
+      <button id="saveBtn">Save Settings</button>
+    </div>
+    <div id="status" class="status">Settings saved successfully!</div>
+  </div>
+  <script src="utils.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

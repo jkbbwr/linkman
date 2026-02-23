@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Linkman Search Results</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f9fafb;
+      color: #111827;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      padding: 15px 30px;
+      border-bottom: 1px solid #e5e7eb;
+      background-color: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+      margin-right: 30px;
+      color: #2563eb;
+    }
+    .search-bar {
+      display: flex;
+      flex: 1;
+      gap: 15px;
+      align-items: center;
+    }
+    .search-input {
+      flex: 1;
+      padding: 10px 15px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+    }
+    .search-input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    .btn-primary {
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn-primary:hover {
+      background-color: #2563eb;
+    }
+    .btn-danger {
+      background-color: #ef4444;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn-danger:hover {
+      background-color: #dc2626;
+    }
+    .btn-info {
+      background-color: #6366f1;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn-info:hover {
+      background-color: #4f46e5;
+    }
+    .filters-bar {
+      display: flex;
+      padding: 15px 30px;
+      background-color: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      gap: 15px;
+      align-items: center;
+    }
+    .tag-container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      min-height: 38px;
+      padding: 4px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      background-color: #fff;
+      cursor: text;
+      flex: 1;
+    }
+    .tag-container.focused {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    .tag-chip {
+      display: flex;
+      align-items: center;
+      background-color: #e5e7eb;
+      color: #374151;
+      font-size: 13px;
+      border-radius: 4px;
+      padding: 4px 8px;
+      margin: 2px;
+    }
+    .tag-chip-remove {
+      margin-left: 6px;
+      color: #9ca3af;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .tag-chip-remove:hover {
+      color: #4b5563;
+    }
+    .tag-input-field {
+      flex: 1;
+      min-width: 60px;
+      border: none;
+      outline: none;
+      padding: 6px;
+      font-size: 14px;
+    }
+    .date-range {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .date-range span {
+      font-size: 13px;
+      color: #6b7280;
+    }
+    .date-input {
+      padding: 8px;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    main {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+    .bookmark-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .bookmark-item {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+    }
+    .bookmark-item:hover {
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+    .bookmark-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1f2937;
+      text-decoration: none;
+      margin-bottom: 8px;
+    }
+    .bookmark-title:hover {
+      color: #3b82f6;
+    }
+    .bookmark-url {
+      font-size: 14px;
+      color: #059669;
+      margin-bottom: 12px;
+      word-break: break-all;
+    }
+    .bookmark-meta {
+      font-size: 13px;
+      color: #6b7280;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .bookmark-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .bookmark-tag {
+      background-color: #f3f4f6;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 50px;
+      color: #6b7280;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Linkman</h1>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search URL..." class="search-input">
+      <input type="text" id="titleInput" placeholder="Search by title..." class="search-input">
+      <button id="searchBtn" class="btn-primary">Search</button>
+    </div>
+  </header>
+  
+  <div class="filters-bar">
+    <div class="tag-container" id="tagContainer">
+      <div id="tagChips" style="display: flex; flex-wrap: wrap;"></div>
+      <input type="text" id="tagInputField" placeholder="Filter by tag (e.g. rust, tutorial)" class="tag-input-field">
+    </div>
+    <div class="date-range">
+      <input type="date" id="startDate" class="date-input" title="Start Date">
+      <span>to</span>
+      <input type="date" id="endDate" class="date-input" title="End Date">
+    </div>
+  </div>
+
+  <main>
+    <ul id="bookmarkList" class="bookmark-list">
+      <div class="empty-state">Loading bookmarks...</div>
+    </ul>
+  </main>
+
+  <script src="utils.js"></script>
+  <script src="results.js"></script>
+</body>
+</html>
