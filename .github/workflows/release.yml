@@ -1,4 +1,4 @@
-name: Linkman Release
+name: Release
 
 on:
   push:
@@ -6,38 +6,33 @@ on:
       - 'v*'
 
 jobs:
-  build:
-    name: Build and Release
+  all:
+    name: Build, Release, and Docker
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      packages: write
     steps:
       - uses: actions/checkout@v4
       
-      - name: Setup Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          cache-workdir: api
-          
       - name: Build Backend
-        run: cargo build --release
+        run: |
+          rustup update stable
+          cargo build --release
         working-directory: api
         
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
-        
       - name: Build Extension
-        run: |
+        uses: oven-sh/setup-bun@v2
+      - run: |
           bun install
           bun run build
         working-directory: extension
         
-      - name: Zip Extension
+      - name: Package and Release
         run: |
           cd extension/dist && zip -r ../../linkman-extension-${{ github.ref_name }}.zip .
           
-      - name: Create Release
-        uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v2
         with:
           files: |
             api/target/release/api
@@ -45,15 +40,6 @@ jobs:
           draft: false
           prerelease: false
 
-  docker:
-    name: Build & Push Docker Image
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v4
-      
       - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
@@ -61,20 +47,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ghcr.io/${{ github.repository }}
-          tags: |
-            type=semver,pattern={{version}}
-            latest
-            
-      - name: Build and push
+      - name: Build and push Docker
         uses: docker/build-push-action@v5
         with:
           context: .
           file: api/Dockerfile
           push: true
-          tags: ${{ id.meta.outputs.tags }}
-          labels: ${{ id.meta.outputs.labels }}
+          tags: ghcr.io/${{ github.repository }}:latest,ghcr.io/${{ github.repository }}:${{ github.ref_name }}
