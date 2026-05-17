@@ -29,7 +29,6 @@ jobs:
           images: ghcr.io/${{ github.repository }}
           tags: |
             type=semver,pattern={{version}}
-            type=sha
             latest
             
       - name: Build and push
@@ -71,8 +70,9 @@ jobs:
         
       - name: Zip Extension
         run: |
-          cd extension/dist
-          zip -r ../../linkman-extension-${{ github.ref_name }}.zip .
+          mkdir -p dist-zip
+          cp -r extension/dist/* dist-zip/
+          cd dist-zip && zip -r ../linkman-extension-${{ github.ref_name }}.zip .
           
       # 3. Create Release
       - name: Create Release
