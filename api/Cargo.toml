@@ -1,0 +1,27 @@
+[package]
+name = "api"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.102"
+axum = "0.8.9"
+chrono = { version = "0.4.44", features = ["serde"] }
+dotenvy = "0.15.7"
+reqwest = { version = "0.13.3", features = ["json"] }
+rig = "0.37.0"
+rig-core = "0.37.0"
+schemars = { version = "1.2.1", features = ["uuid1"] }
+scraper = "0.27.0"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+sqlx = { version = "0.8.6", features = ["runtime-tokio-rustls", "postgres", "macros", "chrono", "uuid", "migrate"] }
+tokio = { version = "1.52.3", features = ["full"] }
+tower = { version = "0.5.3", features = ["full"] }
+tower-http = { version = "0.6.10", features = ["auth", "validate-request"] }
+uuid = { version = "1.23.1", features = ["v4", "serde"] }
+
+[dev-dependencies]
+axum-test = "20.0.0"
+serde_json = "1.0.149"
+tower = { version = "0.5.3", features = ["full"] }
