@@ -6,7 +6,41 @@ on:
       - 'v*'
 
 jobs:
-  release:
+  build:
+    name: Build and Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - run: echo "Hello"
+      - uses: actions/checkout@v4
+      
+      - name: Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          cache-workdir: api
+          
+      - name: Build Backend
+        run: cargo build --release
+        working-directory: api
+        
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        
+      - name: Build Extension
+        run: |
+          bun install
+          bun run build
+        working-directory: extension
+        
+      - name: Zip Extension
+        run: |
+          cd extension/dist && zip -r ../../linkman-extension-${{ github.ref_name }}.zip .
+          
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            api/target/release/api
+            linkman-extension-${{ github.ref_name }}.zip
+          draft: false
+          prerelease: false
